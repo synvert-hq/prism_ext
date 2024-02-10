@@ -1,6 +1,8 @@
 # PrismExt
 
-It adds some helpers to prism node.
+It adds `parent_node` to the `Prism::Node`.
+
+It also adds some helpers to prism node.
 
 ```ruby
 # node is a HashNode
