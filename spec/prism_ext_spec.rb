@@ -58,4 +58,52 @@ RSpec.describe PrismExt do
       expect(node.hash_value(:bar)).to be_nil
     end
   end
+
+  describe 'pair of hash node by method_missing' do
+    it 'gets for hash node' do
+      node = parse('{:foo => :bar}')
+      expect(node.foo_pair.to_source).to eq ':foo => :bar'
+
+      node = parse('{ foo: :bar }')
+      expect(node.foo_pair.to_source).to eq 'foo: :bar'
+
+      node = parse("{'foo' => 'bar'}")
+      expect(node.foo_pair.to_source).to eq "'foo' => 'bar'"
+
+      node = parse("{ foo: 'bar' }")
+      expect(node.foo_pair.to_source).to eq "foo: 'bar'"
+
+      expect(node.bar_value).to be_nil
+    end
+  end
+
+  describe 'value of hash node by method_missing' do
+    it 'gets for hash node' do
+      node = parse('{:foo => :bar}')
+      expect(node.foo_value.to_source).to eq ':bar'
+
+      node = parse('{ foo: :bar }')
+      expect(node.foo_value.to_source).to eq ':bar'
+
+      node = parse("{'foo' => 'bar'}")
+      expect(node.foo_value.to_source).to eq "'bar'"
+
+      node = parse("{ foo: 'bar' }")
+      expect(node.foo_value.to_source).to eq "'bar'"
+
+      expect(node.bar_value).to be_nil
+    end
+  end
+
+  describe 'value source of hash node by method_missing' do
+    it 'gets for hash node' do
+      node = parse('{:foo => :bar}')
+      expect(node.foo_source).to eq ':bar'
+
+      node = parse("{'foo' => 'bar'}")
+      expect(node.foo_source).to eq "'bar'"
+
+      expect(node.bar_source).to eq ''
+    end
+  end
 end
