@@ -30,7 +30,7 @@ module Prism
       end
     end
 
-    def hash_pair(key)
+    def hash_element(key)
       if is_a?(HashNode)
         elements.find { |element_node| element_node.key.to_value == key }
       else
@@ -75,8 +75,8 @@ module Prism
     def method_missing(method_name, *args, &block)
       return super unless is_a?(HashNode)
 
-      if method_name.to_s.end_with?('_pair')
-        key = method_name.to_s[0..-6]
+      if method_name.to_s.end_with?('_element')
+        key = method_name.to_s[0..-9]
         return elements.find { |element| element.key.to_value.to_s == key }
       elsif method_name.to_s.end_with?('_value')
         key = method_name.to_s[0..-7]
@@ -92,11 +92,11 @@ module Prism
     def respond_to_missing?(method_name, *args)
       return super unless is_a?(HashNode)
 
-      if method_name.to_s.end_with?('_pair')
-        key = method_name[0..-6]
+      if method_name.to_s.end_with?('_element')
+        key = method_name.to_s[0..-9]
         return !!elements.find { |element| element.key.to_value.to_s == key }
       elsif method_name.to_s.end_with?('_value')
-        key = method_name[0..-7]
+        key = method_name.to_s[0..-7]
         return !!elements.find { |element| element.key.to_value.to_s == key }
       elsif method_name.to_s.end_with?('_source')
         key = method_name.to_s[0..-8]

@@ -86,15 +86,15 @@ RSpec.describe PrismExt do
     end
   end
 
-  describe '#hash_pair' do
+  describe '#hash_element' do
     it 'gets pair of specified key' do
       node = parse('{:foo => :bar}')
-      expect(node.hash_pair(:foo)).to eq node.elements[0]
+      expect(node.hash_element(:foo)).to eq node.elements[0]
     end
 
     it 'gets nil if key does not exist' do
       node = parse('{:foo => :bar}')
-      expect(node.hash_pair(:bar)).to be_nil
+      expect(node.hash_element(:bar)).to be_nil
     end
   end
 
@@ -110,19 +110,19 @@ RSpec.describe PrismExt do
     end
   end
 
-  describe 'pair of hash node by method_missing' do
+  describe 'element of hash node by method_missing' do
     it 'gets for hash node' do
       node = parse('{:foo => :bar}')
-      expect(node.foo_pair.to_source).to eq ':foo => :bar'
+      expect(node.foo_element.to_source).to eq ':foo => :bar'
 
       node = parse('{ foo: :bar }')
-      expect(node.foo_pair.to_source).to eq 'foo: :bar'
+      expect(node.foo_element.to_source).to eq 'foo: :bar'
 
       node = parse("{'foo' => 'bar'}")
-      expect(node.foo_pair.to_source).to eq "'foo' => 'bar'"
+      expect(node.foo_element.to_source).to eq "'foo' => 'bar'"
 
       node = parse("{ foo: 'bar' }")
-      expect(node.foo_pair.to_source).to eq "foo: 'bar'"
+      expect(node.foo_element.to_source).to eq "foo: 'bar'"
 
       expect(node.bar_value).to be_nil
     end
