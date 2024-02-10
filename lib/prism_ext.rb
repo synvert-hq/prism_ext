@@ -46,6 +46,29 @@ module Prism
       end
     end
 
+    def to_value
+      case self
+      when SymbolNode
+        value.to_sym
+      when StringNode
+        content
+      when FloatNode
+        value
+      when IntegerNode
+        value
+      when TrueNode
+        true
+      when FalseNode
+        false
+      when NilNode
+        nil
+      when ArrayNode
+        elements.map { |element| element.to_value }
+      else
+        self
+      end
+    end
+
     alias :to_source :slice
 
     # Respond key value and source for hash node
