@@ -46,6 +46,8 @@ module Prism
       end
     end
 
+    alias :to_source :slice
+
     # Respond key value and source for hash node
     def method_missing(method_name, *args, &block)
       return super unless is_a?(HashNode)

@@ -21,6 +21,13 @@ RSpec.describe PrismExt do
     expect(node.source).to eq source
   end
 
+  describe '#to_source' do
+    it 'gets source' do
+      child_node = node.body.body.first
+      expect(child_node.to_source).to eq "def initialize; end"
+    end
+  end
+
   describe '#keys' do
     it 'gets for hash node' do
       node = parse("{:foo => :bar, 'foo' => 'bar'}")
