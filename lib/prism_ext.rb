@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require_relative "prism_ext/version"
+
 require 'prism'
 
 module PrismExt
@@ -9,7 +10,37 @@ module PrismExt
 end
 
 module Prism
+  class << self
+    alias_method :original_parse, :parse
+
+    def parse(source)
+      result = original_parse(source)
+      result.value.set_parent_node
+      result
+    end
+  end
+
   class Node
+    attr_accessor :parent_node
+
+    def set_parent_node
+      self.child_nodes.each do |child_node|
+        if child_node.is_a?(Array)
+          child_node.each do |child_child_node|
+            next unless child_child_node.is_a?(Node)
+
+            child_child_node.parent_node = self
+            child_child_node.set_parent_node
+          end
+        end
+
+        next unless child_node.is_a?(Node)
+
+        child_node.parent_node = self
+        child_node.set_parent_node
+      end
+    end
+
     def source
       location.instance_variable_get(:@source).source
     end
