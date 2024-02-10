@@ -1,11 +1,23 @@
 # frozen_string_literal: true
 
+require 'spec_helper'
+
 RSpec.describe PrismExt do
-  it "has a version number" do
-    expect(PrismExt::VERSION).not_to be nil
+  def parse(code)
+    Prism.parse(code).value.statements.body.first
   end
 
-  it "does something useful" do
-    expect(false).to eq(true)
+  let(:source) { <<~EOS }
+    class Synvert
+      def initialize; end
+      def foo; end
+      def bar; end
+    end
+  EOS
+
+  let(:node) { parse(source) }
+
+  it 'gets source' do
+    expect(node.source).to eq source
   end
 end
