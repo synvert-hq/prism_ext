@@ -104,7 +104,7 @@ module Prism
 
     # Respond key value and source for hash node
     def method_missing(method_name, *args, &block)
-      return super unless is_a?(HashNode)
+      return super unless respond_to_elements?
 
       if method_name.to_s.end_with?('_element')
         key = method_name.to_s[0..-9]
@@ -121,7 +121,7 @@ module Prism
     end
 
     def respond_to_missing?(method_name, *args)
-      return super unless is_a?(HashNode)
+      return super unless respond_to_elements?
 
       if method_name.to_s.end_with?('_element')
         key = method_name.to_s[0..-9]
@@ -135,6 +135,12 @@ module Prism
       end
 
       super
+    end
+
+    private
+
+    def respond_to_elements?
+      is_a?(HashNode) || is_a?(KeywordHashNode)
     end
   end
 end
