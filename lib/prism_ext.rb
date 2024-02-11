@@ -46,7 +46,7 @@ module Prism
     end
 
     def keys
-      if is_a?(HashNode)
+      if respond_to_elements?
         elements.map(&:key)
       else
         raise MethodNotSupported, "keys is not supported for #{self}"
@@ -54,7 +54,7 @@ module Prism
     end
 
     def values
-      if is_a?(HashNode)
+      if respond_to_elements?
         elements.map(&:value)
       else
         raise MethodNotSupported, "values is not supported for #{self}"
@@ -62,7 +62,7 @@ module Prism
     end
 
     def hash_element(key)
-      if is_a?(HashNode)
+      if respond_to_elements?
         elements.find { |element_node| element_node.key.to_value == key }
       else
         raise MethodNotSupported, "hash_pair is not supported for #{self}"
@@ -70,7 +70,7 @@ module Prism
     end
 
     def hash_value(key)
-      if is_a?(HashNode)
+      if respond_to_elements?
         elements.find { |element_node| element_node.key.to_value == key }&.value
       else
         raise MethodNotSupported, "hash_value is not supported for #{self}"
