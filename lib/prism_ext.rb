@@ -24,20 +24,16 @@ module Prism
     attr_accessor :parent_node
 
     def set_parent_node
-      self.child_nodes.each do |child_node|
+      self.compact_child_nodes.each do |child_node|
         if child_node.is_a?(Array)
           child_node.each do |child_child_node|
-            next unless child_child_node.is_a?(Node)
-
             child_child_node.parent_node = self
             child_child_node.set_parent_node
           end
+        else
+          child_node.parent_node = self
+          child_node.set_parent_node
         end
-
-        next unless child_node.is_a?(Node)
-
-        child_node.parent_node = self
-        child_node.set_parent_node
       end
     end
 
