@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.2.3 (2024-02-17)
+
+* Remove `Prism::Node#source` hack
+
 ## 0.2.2 (2024-02-11)
 
 * Reuse `respond_to_elements?`
