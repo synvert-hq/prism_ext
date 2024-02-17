@@ -17,10 +17,6 @@ RSpec.describe PrismExt do
 
   let(:node) { parse(source) }
 
-  it 'gets source' do
-    expect(node.source).to eq source
-  end
-
   describe '#to_value' do
     it 'gets for symbol' do
       node = parse(':foo')

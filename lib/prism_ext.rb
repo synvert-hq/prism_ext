@@ -37,10 +37,6 @@ module Prism
       end
     end
 
-    def source
-      location.instance_variable_get(:@source).source
-    end
-
     def keys
       if respond_to_elements?
         elements.map(&:key)
