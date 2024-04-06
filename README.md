@@ -1,5 +1,8 @@
 # PrismExt
 
+[![Build Status](https://github.com/synvert-hq/prism_ext/actions/workflows/main.yml/badge.svg)](https://github.com/synvert-hq/prism_ext/actions/workflows/main.yml)
+[![Gem Version](https://img.shields.io/gem/v/prism_ext.svg)](https://rubygems.org/gems/prism_ext)
+
 It adds `parent_node` to the `Prism::Node`.
 
 It also adds some helpers to prism node.
