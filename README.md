@@ -3,16 +3,7 @@
 [![Build Status](https://github.com/synvert-hq/prism_ext/actions/workflows/main.yml/badge.svg)](https://github.com/synvert-hq/prism_ext/actions/workflows/main.yml)
 [![Gem Version](https://img.shields.io/gem/v/prism_ext.svg)](https://rubygems.org/gems/prism_ext)
 
-It adds `parent_node` to the `Prism::Node`.
-
-It also adds some helpers to prism node.
-
-```ruby
-# node is a HashNode
-node.foo_element # get the element node of hash foo key
-node.foo_value # get the value of of the hash foo key
-node.foo_source # get the source of the value node of the hash foo key
-```
+It adds some helpers to prism node.
 
 ## Installation
 
@@ -29,6 +20,17 @@ If bundler is not being used to manage dependencies, install the gem by executin
 ```ruby
 require 'prism'
 require 'prism_ext'
+
+# node is a HashNode or KeywordHashNode
+node.foo_element # get the element node of hash foo key
+node.foo_value # get the value of of the hash foo key
+node.foo_source # get the source of the value node of the hash foo key
+node.keys # get key nodes of the hash node
+node.values # get value nodes of the hash node
+
+# all nodes
+node.to_value # get the value of the node, like `true`, `false`, `nil`, `1`, `"foo"`
+node.to_source # get the source code of the node
 ```
 
 ## Development
