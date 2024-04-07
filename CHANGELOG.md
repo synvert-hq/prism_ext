@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.3.0 (2024-04-07)
+
+* Abstract `prism_ext/parent_node_ext`
+* Inject hash helper methods only to `HashNode` and `KeywordHashNode`
+
 ## 0.2.3 (2024-02-17)
 
 * Remove `Prism::Node#source` hack
