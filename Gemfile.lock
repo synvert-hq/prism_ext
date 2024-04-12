@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    prism_ext (0.3.0)
+    prism_ext (0.3.1)
       prism
 
 GEM

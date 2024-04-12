@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.3.1 (2024-04-12)
+
+* Skip `AssocSplatNode` for hash helper methods
+
 ## 0.3.0 (2024-04-07)
 
 * Abstract `prism_ext/parent_node_ext`
