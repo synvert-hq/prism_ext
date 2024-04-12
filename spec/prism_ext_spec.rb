@@ -70,38 +70,38 @@ RSpec.describe PrismExt do
 
   describe '#keys' do
     it 'gets for hash node' do
-      node = parse("{:foo => :bar, 'foo' => 'bar'}")
-      expect(node.keys).to eq [node.elements[0].key, node.elements[1].key]
+      node = parse("{ **foobar, :foo => :bar, 'foo' => 'bar' }")
+      expect(node.keys).to eq [node.elements[1].key, node.elements[2].key]
     end
   end
 
   describe '#values' do
     it 'gets for hash node' do
-      node = parse("{:foo => :bar, 'foo' => 'bar'}")
-      expect(node.values).to eq [node.elements[0].value, node.elements[1].value]
+      node = parse("{ **foobar, :foo => :bar, 'foo' => 'bar' }")
+      expect(node.values).to eq [node.elements[1].value, node.elements[2].value]
     end
   end
 
   describe '#hash_element' do
     it 'gets pair of specified key' do
-      node = parse('{:foo => :bar}')
-      expect(node.hash_element(:foo)).to eq node.elements[0]
+      node = parse('{**foobar, :foo => :bar}')
+      expect(node.hash_element(:foo)).to eq node.elements[1]
     end
 
     it 'gets nil if key does not exist' do
-      node = parse('{:foo => :bar}')
+      node = parse('{**foobar, :foo => :bar}')
       expect(node.hash_element(:bar)).to be_nil
     end
   end
 
   describe '#hash_value' do
     it 'gets value of specified key' do
-      node = parse('{:foo => :bar}')
+      node = parse('{**foobar, :foo => :bar}')
       expect(node.hash_value(:foo).to_value).to eq :bar
     end
 
     it 'gets nil if key does not exist' do
-      node = parse('{:foo => :bar}')
+      node = parse('{**foobar, :foo => :bar}')
       expect(node.hash_value(:bar)).to be_nil
     end
   end
@@ -120,7 +120,10 @@ RSpec.describe PrismExt do
       node = parse("{ foo: 'bar' }")
       expect(node.foo_element.to_source).to eq "foo: 'bar'"
 
-      expect(node.bar_value).to be_nil
+      node = parse("{ **foobar, foo: 'bar' }")
+      expect(node.foo_element.to_source).to eq "foo: 'bar'"
+
+      expect(node.bar_element).to be_nil
     end
   end
 
@@ -138,6 +141,9 @@ RSpec.describe PrismExt do
       node = parse("{ foo: 'bar' }")
       expect(node.foo_value.to_source).to eq "'bar'"
 
+      node = parse("{ **foobar, foo: 'bar' }")
+      expect(node.foo_value.to_source).to eq "'bar'"
+
       expect(node.bar_value).to be_nil
     end
   end
@@ -148,6 +154,9 @@ RSpec.describe PrismExt do
       expect(node.foo_source).to eq ':bar'
 
       node = parse("{'foo' => 'bar'}")
+      expect(node.foo_source).to eq "'bar'"
+
+      node = parse("{ **foobar, 'foo' => 'bar'}")
       expect(node.foo_source).to eq "'bar'"
 
       expect(node.bar_source).to eq ''

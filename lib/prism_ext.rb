@@ -12,32 +12,32 @@ end
 module Prism
   module HashNodeExt
     def keys
-      elements.map(&:key)
+      elements.select { |element| element.type == :assoc_node }.map(&:key)
     end
 
     def values
-      elements.map(&:value)
+      elements.select { |element| element.type == :assoc_node }.map(&:value)
     end
 
     def hash_element(key)
-      elements.find { |element_node| element_node.key.to_value == key }
+      elements.find { |element| element.type == :assoc_node && element.key.to_value == key }
     end
 
     def hash_value(key)
-      elements.find { |element_node| element_node.key.to_value == key }&.value
+      elements.find { |element| element.type == :assoc_node && element.key.to_value == key }&.value
     end
 
     # Respond key value and source for hash node
     def method_missing(method_name, *args, &block)
       if method_name.to_s.end_with?('_element')
         key = method_name.to_s[0..-9]
-        return elements.find { |element| element.key.to_value.to_s == key }
+        return elements.find { |element| element.type == :assoc_node && element.key.to_value.to_s == key }
       elsif method_name.to_s.end_with?('_value')
         key = method_name.to_s[0..-7]
-        return elements.find { |element| element.key.to_value.to_s == key }&.value
+        return elements.find { |element| element.type == :assoc_node && element.key.to_value.to_s == key }&.value
       elsif method_name.to_s.end_with?('_source')
         key = method_name.to_s[0..-8]
-        return elements.find { |element| element.key.to_value.to_s == key }&.value&.to_source || ''
+        return elements.find { |element| element.type == :assoc_node && element.key.to_value.to_s == key }&.value&.to_source || ''
       end
 
       super
@@ -46,13 +46,13 @@ module Prism
     def respond_to_missing?(method_name, *args)
       if method_name.to_s.end_with?('_element')
         key = method_name.to_s[0..-9]
-        return !!elements.find { |element| element.key.to_value.to_s == key }
+        return !!elements.find { |element| element.type == :assoc_node && element.key.to_value.to_s == key }
       elsif method_name.to_s.end_with?('_value')
         key = method_name.to_s[0..-7]
-        return !!elements.find { |element| element.key.to_value.to_s == key }
+        return !!elements.find { |element| element.type == :assoc_node && element.key.to_value.to_s == key }
       elsif method_name.to_s.end_with?('_source')
         key = method_name.to_s[0..-8]
-        return !!elements.find { |element| element.key.to_value.to_s == key }
+        return !!elements.find { |element| element.type == :assoc_node && element.key.to_value.to_s == key }
       end
 
       super
