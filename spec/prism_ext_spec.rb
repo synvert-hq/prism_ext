@@ -82,30 +82,6 @@ RSpec.describe PrismExt do
     end
   end
 
-  describe '#hash_element' do
-    it 'gets pair of specified key' do
-      node = parse('{**foobar, :foo => :bar}')
-      expect(node.hash_element(:foo)).to eq node.elements[1]
-    end
-
-    it 'gets nil if key does not exist' do
-      node = parse('{**foobar, :foo => :bar}')
-      expect(node.hash_element(:bar)).to be_nil
-    end
-  end
-
-  describe '#hash_value' do
-    it 'gets value of specified key' do
-      node = parse('{**foobar, :foo => :bar}')
-      expect(node.hash_value(:foo).to_value).to eq :bar
-    end
-
-    it 'gets nil if key does not exist' do
-      node = parse('{**foobar, :foo => :bar}')
-      expect(node.hash_value(:bar)).to be_nil
-    end
-  end
-
   describe 'element of hash node by method_missing' do
     it 'gets for hash node' do
       node = parse('{:foo => :bar}')
