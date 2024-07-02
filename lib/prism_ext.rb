@@ -83,6 +83,12 @@ module Prism
       end
     end
 
-    alias :to_source :slice
+    def to_source
+      if respond_to?(:opening_loc) && respond_to?(:closing_loc) && opening_loc && closing_loc
+        location.send(:source).source[opening_loc.start_offset...closing_loc.end_offset]
+      else
+        slice
+      end
+    end
   end
 end

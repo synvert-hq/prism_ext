@@ -66,6 +66,21 @@ RSpec.describe PrismExt do
       child_node = node.body.body.first
       expect(child_node.to_source).to eq "def initialize; end"
     end
+
+    it 'gets source for heredoc' do
+      child_node = parse(<<~EOS)
+        <<~HEREDOC
+          hello
+          world
+        HEREDOC
+      EOS
+      expect(child_node.to_source).to eq <<~EOS
+        <<~HEREDOC
+          hello
+          world
+        HEREDOC
+      EOS
+    end
   end
 
   describe '#keys' do
