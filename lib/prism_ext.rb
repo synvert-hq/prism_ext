@@ -84,11 +84,13 @@ module Prism
     end
 
     def to_source
+      # node.slice doesn't work for InterpolatedStringNode
       if respond_to?(:opening_loc) && respond_to?(:closing_loc) && opening_loc && closing_loc
-        location.send(:source).source[opening_loc.start_offset...closing_loc.end_offset]
+        range = [location.start_offset, opening_loc.start_offset].min...[closing_loc.end_offset, location.end_offset].max
       else
-        slice
+        range = location.start_offset...location.end_offset
       end
+      location.send(:source).source[range]
     end
   end
 end

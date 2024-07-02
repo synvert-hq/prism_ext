@@ -81,6 +81,11 @@ RSpec.describe PrismExt do
         HEREDOC
       EOS
     end
+
+    it 'gets source for call node' do
+      child_node = parse('foo(bar)')
+      expect(child_node.to_source).to eq 'foo(bar)'
+    end
   end
 
   describe '#keys' do
