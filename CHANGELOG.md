@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.3.3 (2024-07-02)
+
+* Fix heredoc `to_source`
+
 ## 0.3.2 (2024-04-18)
 
 * Remove `hash_element` and `hash_value` methods
