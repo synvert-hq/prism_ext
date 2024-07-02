@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.3.4 (2024-07-02)
+
+* Fix call node `to_source`
+
 ## 0.3.3 (2024-07-02)
 
 * Fix heredoc `to_source`
