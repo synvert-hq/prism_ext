@@ -87,7 +87,7 @@ module Prism
       # node.slice doesn't work for InterpolatedStringNode
       if interpolated_string?
         range = opening_loc.start_offset...closing_loc.end_offset
-      elsif type == :call_node && arguments && arguments.arguments.any?(&:interpolated_string?)
+      elsif is_a?(CallNode) && arguments.is_a?(ArgumentsNode) && arguments.arguments.any?(&:interpolated_string?)
         last_interpolated_string_argument = arguments.arguments.select(&:interpolated_string?).last
         range = location.start_offset...last_interpolated_string_argument.closing_loc.end_offset
       else
