@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.3.6 (2024-07-03)
+
+* Check `arguments` is an `ArgumetnsNode`
+
 ## 0.3.5 (2024-07-03)
 
 * Fix call node with heredoc argument `to_source`
