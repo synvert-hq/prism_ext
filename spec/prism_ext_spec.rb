@@ -73,49 +73,48 @@ RSpec.describe PrismExt do
     end
 
     it 'gets source for heredoc' do
-      node = parse(<<~EOS)
+      source = <<~EOS
         <<~HEREDOC
           hello
           world
         HEREDOC
       EOS
-      expect(node.to_source).to eq <<~EOS
-        <<~HEREDOC
-          hello
-          world
-        HEREDOC
-      EOS
+      node = parse(source)
+      expect(node.to_source).to eq source
+
+      if node.slice == source
+        puts 'Node#slice is working for heredoc now'
+      end
     end
 
     it 'gets source for call with heredoc argument' do
-      node = parse(<<~EOS)
+      source = <<~EOS
         test(<<~HEREDOC)
           hello
           world
         HEREDOC
       EOS
-      expect(node.to_source).to eq <<~EOS
-        test(<<~HEREDOC)
-          hello
-          world
-        HEREDOC
-      EOS
+      node = parse(source)
+      expect(node.to_source).to eq source
+
+      if node.slice == source
+        puts 'Node#slice is working for call with heredoc argument now'
+      end
     end
 
     it 'gets source for block' do
-      node = parse(<<~EOS.strip)
-        def fooboar(&block)
-          foobar(&block)
+      source = <<~EOS.strip
+        def foo(&block)
+          bar(&block)
         end
       EOS
-      expect(node.to_source).to eq <<~EOS.strip
-        def fooboar(&block)
-          foobar(&block)
-        end
-      EOS
-      expect(node.body.body.first.to_source).to eq <<~EOS.strip
-        foobar(&block)
-      EOS
+      node = parse(source)
+      expect(node.to_source).to eq source
+      expect(node.body.body.first.to_source).to eq 'bar(&block)'
+
+      if node.body.body.first.slice == 'bar(&block)'
+        puts 'Node#slice is working for block now'
+      end
     end
   end
 

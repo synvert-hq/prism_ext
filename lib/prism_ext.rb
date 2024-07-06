@@ -87,14 +87,14 @@ module Prism
       case self
       when InterpolatedStringNode, StringNode
         if opening.start_with?('<<')
-          range = opening_loc.start_offset...closing_loc.end_offset
+          range = opening_loc.start_character_offset...closing_loc.end_character_offset
         end
       when CallNode
         if arguments.is_a?(ArgumentsNode) && arguments.arguments.any?(&:interpolated_string?)
           last_interpolated_string_argument = arguments.arguments.select(&:interpolated_string?).last
-          range = location.start_offset...last_interpolated_string_argument.closing_loc.end_offset
+          range = location.start_character_offset...last_interpolated_string_argument.closing_loc.end_character_offset
         elsif block.is_a?(BlockArgumentNode)
-          range = location.start_offset...closing_loc.end_offset
+          range = location.start_character_offset...closing_loc.end_character_offset
         end
       end
       range ? location.send(:source).source[range] : slice
