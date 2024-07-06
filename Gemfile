@@ -5,6 +5,9 @@ source "https://rubygems.org"
 # Specify your gem's dependencies in prism_ext.gemspec
 gemspec
 
-gem "rake", "~> 13.0"
+gem "rake"
+gem "rspec"
 
-gem "rspec", "~> 3.0"
+gem 'guard'
+gem 'guard-bundler'
+gem 'guard-rspec'
