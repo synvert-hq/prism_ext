@@ -86,7 +86,7 @@ module Prism
     def to_source
       case self
       when InterpolatedStringNode, StringNode
-        if opening.start_with?('<<')
+        if opening&.start_with?('<<')
           range = opening_loc.start_character_offset...closing_loc.end_character_offset
         end
       when CallNode
