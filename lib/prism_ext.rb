@@ -90,6 +90,8 @@ module Prism
       elsif is_a?(CallNode) && arguments.is_a?(ArgumentsNode) && arguments.arguments.any?(&:interpolated_string?)
         last_interpolated_string_argument = arguments.arguments.select(&:interpolated_string?).last
         range = location.start_offset...last_interpolated_string_argument.closing_loc.end_offset
+      elsif is_a?(CallNode) && block.is_a?(BlockArgumentNode)
+        range = location.start_offset...closing_loc.end_offset
       else
         range = location.start_offset...location.end_offset
       end

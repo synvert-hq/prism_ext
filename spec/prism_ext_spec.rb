@@ -68,18 +68,18 @@ RSpec.describe PrismExt do
     end
 
     it 'gets source for call node' do
-      child_node = parse('foo(bar)')
-      expect(child_node.to_source).to eq 'foo(bar)'
+      node = parse('foo(bar)')
+      expect(node.to_source).to eq 'foo(bar)'
     end
 
     it 'gets source for heredoc' do
-      child_node = parse(<<~EOS)
+      node = parse(<<~EOS)
         <<~HEREDOC
           hello
           world
         HEREDOC
       EOS
-      expect(child_node.to_source).to eq <<~EOS
+      expect(node.to_source).to eq <<~EOS
         <<~HEREDOC
           hello
           world
@@ -88,17 +88,33 @@ RSpec.describe PrismExt do
     end
 
     it 'gets source for call with heredoc argument' do
-      child_node = parse(<<~EOS)
+      node = parse(<<~EOS)
         test(<<~HEREDOC)
           hello
           world
         HEREDOC
       EOS
-      expect(child_node.to_source).to eq <<~EOS
+      expect(node.to_source).to eq <<~EOS
         test(<<~HEREDOC)
           hello
           world
         HEREDOC
+      EOS
+    end
+
+    it 'gets source for block' do
+      node = parse(<<~EOS.strip)
+        def fooboar(&block)
+          foobar(&block)
+        end
+      EOS
+      expect(node.to_source).to eq <<~EOS.strip
+        def fooboar(&block)
+          foobar(&block)
+        end
+      EOS
+      expect(node.body.body.first.to_source).to eq <<~EOS.strip
+        foobar(&block)
       EOS
     end
   end
