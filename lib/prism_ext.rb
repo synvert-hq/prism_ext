@@ -84,24 +84,24 @@ module Prism
     end
 
     def to_source
-      # node.slice doesn't work for InterpolatedStringNode
-      if interpolated_string?
-        range = opening_loc.start_offset...closing_loc.end_offset
-      elsif is_a?(CallNode) && arguments.is_a?(ArgumentsNode) && arguments.arguments.any?(&:interpolated_string?)
-        last_interpolated_string_argument = arguments.arguments.select(&:interpolated_string?).last
-        range = location.start_offset...last_interpolated_string_argument.closing_loc.end_offset
-      elsif is_a?(CallNode) && block.is_a?(BlockArgumentNode)
-        range = location.start_offset...closing_loc.end_offset
-      else
-        range = location.start_offset...location.end_offset
+      case self
+      when InterpolatedStringNode, StringNode
+        if opening.start_with?('<<')
+          range = opening_loc.start_offset...closing_loc.end_offset
+        end
+      when CallNode
+        if arguments.is_a?(ArgumentsNode) && arguments.arguments.any?(&:interpolated_string?)
+          last_interpolated_string_argument = arguments.arguments.select(&:interpolated_string?).last
+          range = location.start_offset...last_interpolated_string_argument.closing_loc.end_offset
+        elsif block.is_a?(BlockArgumentNode)
+          range = location.start_offset...closing_loc.end_offset
+        end
       end
-      location.send(:source).source[range]
+      range ? location.send(:source).source[range] : slice
     end
 
     def interpolated_string?
-      respond_to?(:opening_loc) && respond_to?(:closing_loc) &&
-      opening_loc && closing_loc &&
-      (opening == "<<~#{closing.strip}" || opening == "<<-#{closing.strip}")
+      (is_a?(InterpolatedStringNode) || is_a?(StringNode)) && opening.start_with?('<<')
     end
   end
 end
