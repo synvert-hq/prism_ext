@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## 0.3.7 (2024-07-06)
+
+* Fix call node with block_argument_node `to_source`
+* Use `character_offset` instead of `offset`
+
 ## 0.3.6 (2024-07-03)
 
 * Check `arguments` is an `ArgumetnsNode`
