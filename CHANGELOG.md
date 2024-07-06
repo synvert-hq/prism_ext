@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.3.8 (2024-07-06)
+
+* Fix `StringNode#opening` is nil
+
 ## 0.3.7 (2024-07-06)
 
 * Fix call node with block_argument_node `to_source`
