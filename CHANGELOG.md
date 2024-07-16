@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## 0.4.0 (2024-07-16)
+
+* require `prism_ext/parent_node_ext` back
+
 ## 0.3.8 (2024-07-06)
 
 * Fix `StringNode#opening` is nil
