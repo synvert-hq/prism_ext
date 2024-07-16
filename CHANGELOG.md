@@ -1,8 +1,12 @@
 # CHANGELOG
 
+## 0.4.1 (2024-07-17)
+
+* Add `fullname` to `ModuleNode` and `ClassNode`
+
 ## 0.4.0 (2024-07-16)
 
-* require `prism_ext/parent_node_ext` back
+* Require `prism_ext/parent_node_ext` back
 
 ## 0.3.8 (2024-07-06)
 
