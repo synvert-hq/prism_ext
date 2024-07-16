@@ -3,6 +3,7 @@
 require_relative "prism_ext/version"
 
 require 'prism'
+require_relative "prism_ext/parent_node_ext"
 
 module PrismExt
   class Error < StandardError; end
