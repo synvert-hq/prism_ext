@@ -188,4 +188,17 @@ RSpec.describe PrismExt do
       expect(node.bar_source).to eq ''
     end
   end
+
+  describe '#fullname' do
+    it 'gets fullname of module' do
+      node = parse('module Foo; module Bar; end; end')
+      expect(node.fullname).to eq 'Foo'
+      expect(node.body.body.first.fullname).to eq 'Foo::Bar'
+    end
+
+    it 'gets fullname of class' do
+      node = parse('module Foo; module Bar; class Synvert; end; end; end')
+      expect(node.body.body.first.body.body.first.fullname).to eq 'Foo::Bar::Synvert'
+    end
+  end
 end

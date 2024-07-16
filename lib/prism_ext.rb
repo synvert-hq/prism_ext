@@ -11,6 +11,16 @@ module PrismExt
 end
 
 module Prism
+  module FullnameExt
+    def fullname
+      if parent_node&.parent_node&.respond_to?(:fullname)
+        "#{parent_node.parent_node.fullname}::#{constant_path.to_source}"
+      else
+        constant_path.to_source
+      end
+    end
+  end
+
   module HashNodeExt
     def keys
       elements.select { |element| element.type == :assoc_node }.map(&:key)
@@ -58,6 +68,14 @@ module Prism
 
   class KeywordHashNode
     include HashNodeExt
+  end
+
+  class ClassNode
+    include FullnameExt
+  end
+
+  class ModuleNode
+    include FullnameExt
   end
 
   class Node
