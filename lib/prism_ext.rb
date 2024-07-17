@@ -11,10 +11,10 @@ module PrismExt
 end
 
 module Prism
-  module FullnameExt
-    def fullname
-      if parent_node&.parent_node&.respond_to?(:fullname)
-        "#{parent_node.parent_node.fullname}::#{constant_path.to_source}"
+  module FullNameExt
+    def full_name
+      if parent_node&.parent_node&.respond_to?(:full_name)
+        "#{parent_node.parent_node.full_name}::#{constant_path.to_source}"
       else
         constant_path.to_source
       end
@@ -71,11 +71,11 @@ module Prism
   end
 
   class ClassNode
-    include FullnameExt
+    include FullNameExt
   end
 
   class ModuleNode
-    include FullnameExt
+    include FullNameExt
   end
 
   class Node
