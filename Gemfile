@@ -5,6 +5,7 @@ source "https://rubygems.org"
 # Specify your gem's dependencies in prism_ext.gemspec
 gemspec
 
+gem "ostruct"
 gem "rake"
 gem "rspec"
 
